@@ -271,4 +271,10 @@
     <color name="misalignment_text_color">#F28B82</color>
 
     <color name="screenrecord_status_color">#E94235</color>
+
+    <!-- Binary clock -->
+    <color name="binary_clock_dot_color">#ffffff</color>
+    <color name="binary_clock_empty_dot_color">#ffffff</color>
+    <color name="binary_clock_ambient_dot_color">#ffffff</color>
+    <color name="binary_clock_ambient_empty_dot_color">#ffffff</color>
 </resources>
