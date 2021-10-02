@@ -16,6 +16,7 @@
 package com.android.internal.util.custom;
 
 import android.os.Build;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -26,10 +27,16 @@ import java.util.Map;
 public class PixelPropsUtils {
 
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
+    private static final boolean PRODUCT_SUPPORT_HIGH_FPS =
+            SystemProperties.getBoolean("ro.device.support_high_fps", false);
+    private static final boolean PRODUCT_SUPPORT_CONTENT_REFRESH =
+            SystemProperties.getBoolean("ro.surface_flinger.use_content_detection_for_refresh_rate", false);
     private static final boolean DEBUG = false;
 
     private static final Map<String, Object> propsToChange;
     private static final Map<String, Object> propsToChangeOGPixelXL;
+    private static final Map<String, Object> propsToChangePUBG;
+    private static final Map<String, Object> propsToChangeCOD;
 
     private static final String[] packagesToChange = {
             "com.google.android.gms"
@@ -37,6 +44,20 @@ public class PixelPropsUtils {
 
     private static final String[] packagesToChangeOGPixelXL = {
             "com.google.android.apps.photos"
+    };
+
+    private static final String[] packagesToChangeCOD = {
+        "com.activision.callofduty.shooter"
+    };
+
+    private static final String[] packagesToChangePUBG = {
+        "com.tencent.ig",
+        "com.pubg.krmobile",
+        "com.vng.pubgmobile",
+        "com.rekoo.pubgm",
+        "com.pubg.imobile",
+        "com.pubg.newstate",
+        "com.gameloft.android.ANMP.GloftA9HM" // Asphalt 9
     };
 
     static {
@@ -49,6 +70,10 @@ public class PixelPropsUtils {
         propsToChangeOGPixelXL.put("PRODUCT", "marlin");
         propsToChangeOGPixelXL.put("MODEL", "Pixel XL");
         propsToChangeOGPixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
+        propsToChangePUBG = new HashMap<>();
+        propsToChangePUBG.put("MODEL", "GM1917");
+        propsToChangeCOD = new HashMap<>();
+        propsToChangeCOD.put("MODEL", "SO-52A");
     }
 
     public static void setProps(String packageName) {
@@ -73,6 +98,28 @@ public class PixelPropsUtils {
                 String key = prop.getKey();
                 Object value = prop.getValue();
                 setPropValue(key, value);
+            }
+        }
+        if (PRODUCT_SUPPORT_HIGH_FPS || PRODUCT_SUPPORT_CONTENT_REFRESH) {
+            if (Arrays.asList(packagesToChangePUBG).contains(packageName)){
+                if (DEBUG){
+                    Log.d(TAG, "Defining props for: " + packageName);
+                }
+                for (Map.Entry<String, Object> prop : propsToChangePUBG.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
+            }
+            if (Arrays.asList(packagesToChangeCOD).contains(packageName)){
+                if (DEBUG){
+                    Log.d(TAG, "Defining props for: " + packageName);
+                }
+                for (Map.Entry<String, Object> prop : propsToChangeCOD.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
             }
         }
     }
