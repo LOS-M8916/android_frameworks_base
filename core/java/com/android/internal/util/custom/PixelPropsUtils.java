@@ -34,6 +34,7 @@ public class PixelPropsUtils {
     private static final boolean DEBUG = false;
 
     private static final Map<String, Object> propsToChange;
+    private static final Map<String, Object> propsToChangePixel5;
     private static final Map<String, Object> propsToChangeOGPixelXL;
     private static final Map<String, Object> propsToChangePUBG;
     private static final Map<String, Object> propsToChangeCOD;
@@ -44,6 +45,10 @@ public class PixelPropsUtils {
 
     private static final String[] packagesToChangeOGPixelXL = {
             "com.google.android.apps.photos"
+    };
+
+    private static final String[] packagesToChangePixel5 = {
+            "com.google.android.apps.wallpaper"
     };
 
     private static final String[] packagesToChangeCOD = {
@@ -63,6 +68,13 @@ public class PixelPropsUtils {
     static {
         propsToChange = new HashMap<>();
         propsToChange.put("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+        propsToChangePixel5 = new HashMap<>();
+        propsToChangePixel5.put("BRAND", "google");
+        propsToChangePixel5.put("MANUFACTURER", "Google");
+        propsToChangePixel5.put("DEVICE", "redfin");
+        propsToChangePixel5.put("PRODUCT", "redfin");
+        propsToChangePixel5.put("MODEL", "Pixel 5");
+        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:11/RQ3A.210705.001/7380771:user/release-keys");
         propsToChangeOGPixelXL = new HashMap<>();
         propsToChangeOGPixelXL.put("BRAND", "google");
         propsToChangeOGPixelXL.put("MANUFACTURER", "Google");
@@ -85,6 +97,16 @@ public class PixelPropsUtils {
                 Log.d(TAG, "Defining props for: " + packageName);
             }
             for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
+                String key = prop.getKey();
+                Object value = prop.getValue();
+                setPropValue(key, value);
+            }
+        }
+        if (Arrays.asList(packagesToChangePixel5).contains(packageName)){
+            if (DEBUG){
+                Log.d(TAG, "Defining props for: " + packageName);
+            }
+            for (Map.Entry<String, Object> prop : propsToChangePixel5.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
                 setPropValue(key, value);
