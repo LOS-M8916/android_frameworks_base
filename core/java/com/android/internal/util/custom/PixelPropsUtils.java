@@ -87,68 +87,69 @@ public class PixelPropsUtils {
     }
 
     public static void setProps(String packageName) {
+        Display display = wm.getDefaultDisplay();
+        mDisplayModes = display.getSupportedModes();
         if (packageName == null){
             return;
         }
         if (Arrays.asList(packagesToChange).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
             for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
-                setPropValue(key, value);
+                setPropValue(key, value, packageName);
             }
         }
         if (Arrays.asList(packagesToChangePixel5).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
             for (Map.Entry<String, Object> prop : propsToChangePixel5.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
-                setPropValue(key, value);
+                setPropValue(key, value, packageName);
             }
         }
         if (Arrays.asList(packagesToChangeOGPixelXL).contains(packageName)){
-            if (DEBUG){
-                Log.d(TAG, "Defining props for: " + packageName);
-            }
             for (Map.Entry<String, Object> prop : propsToChangeOGPixelXL.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
-                setPropValue(key, value);
+                setPropValue(key, value, packageName);
             }
         }
-        Display display = wm.getDefaultDisplay();
-        mDisplayModes = display.getSupportedModes();
         if (mDisplayModes.length > 1) {
             if (Arrays.asList(packagesToChangePUBG).contains(packageName)){
-                if (DEBUG){
-                    Log.d(TAG, "Defining props for: " + packageName);
-                }
                 for (Map.Entry<String, Object> prop : propsToChangePUBG.entrySet()) {
                     String key = prop.getKey();
                     Object value = prop.getValue();
-                    setPropValue(key, value);
+                    setPropValue(key, value, packageName);
                 }
             }
             if (Arrays.asList(packagesToChangeCOD).contains(packageName)){
-                if (DEBUG){
-                    Log.d(TAG, "Defining props for: " + packageName);
-                }
                 for (Map.Entry<String, Object> prop : propsToChangeCOD.entrySet()) {
                     String key = prop.getKey();
                     Object value = prop.getValue();
-                    setPropValue(key, value);
+                    setPropValue(key, value, packageName);
                 }
             }
         }
     }
 
-    private static void setPropValue(String key, Object value){
+    private static void setPropValue(String key, Object value, String packageName){
         try {
             if (DEBUG){
+                Log.d(TAG, "Defining props for: " + packageName);
+                Log.d(TAG, "Defining prop " + key + " to " + value.toString());
+            }
+            Field field = Build.class.getDeclaredField(key);
+            field.setAccessible(true);
+            field.set(null, value);
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to set prop " + key, e);
+        }
+    }
+
+    private static void setPropValue(String key, Object value, String packageName){
+        try {
+            if (DEBUG){
+                Log.d(TAG, "Defining props for: " + packageName);
                 Log.d(TAG, "Defining prop " + key + " to " + value.toString());
             }
             Field field = Build.class.getDeclaredField(key);
