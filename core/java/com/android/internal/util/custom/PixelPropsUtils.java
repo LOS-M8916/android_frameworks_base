@@ -47,7 +47,7 @@ public class PixelPropsUtils {
         propsToChange.put("MANUFACTURER", "Google");
         propsToChange.put("DEVICE", "redfin");
         propsToChange.put("PRODUCT", "redfin");
-        propsToChange.put("MODEL", "Pixel 5" + " ");
+        propsToChange.put("MODEL", "Pixel 5");
     }
 
     public static void setProps(String packageName) {
@@ -56,8 +56,8 @@ public class PixelPropsUtils {
         }
         if (packageName.equals(PACKAGE_GMS)) {
             sIsGms = true;
-        }
-        if (packageName.startsWith("com.google.") || Arrays.asList(extraPackagesToChange).contains(packageName)){
+            setPropValue("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+        } else if (packageName.startsWith("com.google.") || Arrays.asList(extraPackagesToChange).contains(packageName)){
             if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
             for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
                 String key = prop.getKey();
