@@ -820,22 +820,14 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         // In portrait, add padding to the bottom to account for the height of the open ringer
         // drawer.
-        if (!isLandscape()) {
-            mDialogView.setPadding(
-                    mDialogView.getPaddingLeft(),
-                    mDialogView.getPaddingTop(),
-                    mDialogView.getPaddingRight(),
-                    mDialogView.getPaddingBottom() + getRingerDrawerOpenExtraSize());
-        } else {
-            mDialogView.setPadding(
-                    mDialogView.getPaddingLeft() + getRingerDrawerOpenExtraSize(),
-                    mDialogView.getPaddingTop(),
-                    mDialogView.getPaddingRight(),
-                    mDialogView.getPaddingBottom());
-        }
+        mDialogView.setPadding(
+                mDialogView.getPaddingLeft(),
+                mDialogView.getPaddingTop(),
+                mDialogView.getPaddingRight(),
+                mDialogView.getPaddingBottom() + getRingerDrawerOpenExtraSize());
 
         ((LinearLayout) mRingerDrawerContainer.findViewById(R.id.volume_drawer_options))
-                .setOrientation(isLandscape() ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
+                .setOrientation(LinearLayout.VERTICAL);
 
         mSelectedRingerContainer.setOnClickListener(view -> {
             if (mIsRingerDrawerOpen) {
@@ -1978,11 +1970,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
 
         final Rect bounds = mRingerAndDrawerContainerBackground.copyBounds();
-        if (!isLandscape()) {
-            bounds.top = (int) (mRingerDrawerClosedAmount * getRingerDrawerOpenExtraSize());
-        } else {
-            bounds.left = (int) (mRingerDrawerClosedAmount * getRingerDrawerOpenExtraSize());
-        }
+        bounds.top = (int) (mRingerDrawerClosedAmount * getRingerDrawerOpenExtraSize());
         mRingerAndDrawerContainerBackground.setBounds(bounds);
     }
 
