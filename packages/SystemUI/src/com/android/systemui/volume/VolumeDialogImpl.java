@@ -365,11 +365,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         // The ringer and rows container has extra height at the top to fit the expanded ringer
         // drawer. This area should not be touchable unless the ringer drawer is open.
         if (view == mTopContainer && !mIsRingerDrawerOpen) {
-            if (!isLandscape()) {
-                y += getRingerDrawerOpenExtraSize();
-            } else {
-                x += getRingerDrawerOpenExtraSize();
-            }
+            y += getRingerDrawerOpenExtraSize();
         }
 
         mTouchableRegion.op(
