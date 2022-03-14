@@ -48,12 +48,7 @@ public class PixelPropsUtils {
         propsToKeep = new HashMap<>();
         propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<String>(Arrays.asList("FINGERPRINT")));
         propsToChangeFp = new HashMap<>();
-        propsToChangeFp.put("BRAND", "google");
-        propsToChangeFp.put("MANUFACTURER", "Google");
-        propsToChangeFp.put("DEVICE", "marlin");
-        propsToChangeFp.put("PRODUCT", "marlin");
-        propsToChangeFp.put("MODEL", "Pixel XL");
-        propsToChangeFp.put("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+        propsToChangeFp.put("FINGERPRINT", "Xiaomi/polaris/polaris:8.0.0/OPR1.170623.032/V9.5.19.0.ODGMIFA:user/release-keys");
         propsToChangeOGPixelXL = new HashMap<>();
         propsToChangeOGPixelXL.put("BRAND", "google");
         propsToChangeOGPixelXL.put("MANUFACTURER", "Google");
