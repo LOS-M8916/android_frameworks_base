@@ -31,24 +31,27 @@ public class PixelPropsUtils {
 
     private static volatile boolean sIsGms = false;
     public static final String PACKAGE_GMS = "com.google.android.gms";
+    public static final String PACKAGE_PHOTOS = "com.google.android.apps.photos";
 
     private static final Map<String, Object> propsToChangeFp;
     private static final Map<String, Object> propsToChangeOGPixelXL;
     private static final Map<String, ArrayList<String>> propsToKeep;
+
     private static final String[] extraPackagesToChange = {
         "com.android.vending",
         "com.breel.wallpapers20"
-    };
-
-    private static final String[] packagesToChangeOGPixelXL = {
-            "com.google.android.apps.photos"
     };
 
     static {
         propsToKeep = new HashMap<>();
         propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<String>(Arrays.asList("FINGERPRINT")));
         propsToChangeFp = new HashMap<>();
-        propsToChangeFp.put("FINGERPRINT", "Xiaomi/polaris/polaris:8.0.0/OPR1.170623.032/V9.5.19.0.ODGMIFA:user/release-keys");
+        propsToChangeFp.put("BRAND", "google");
+        propsToChangeFp.put("MANUFACTURER", "Google");
+        propsToChangeFp.put("DEVICE", "crosshatch");
+        propsToChangeFp.put("PRODUCT", "crosshatch");
+        propsToChangeFp.put("MODEL", "Pixel 3 XL");
+        propsToChangeFp.put("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
         propsToChangeOGPixelXL = new HashMap<>();
         propsToChangeOGPixelXL.put("BRAND", "google");
         propsToChangeOGPixelXL.put("MANUFACTURER", "Google");
@@ -65,7 +68,7 @@ public class PixelPropsUtils {
         if (packageName.equals(PACKAGE_GMS)) {
             sIsGms = true;
         }
-        if (packageName == "com.google.android.apps.photos"){
+        if (packageName.equals(PACKAGE_PHOTOS)){
             if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
             for (Map.Entry<String, Object> prop : propsToChangeOGPixelXL.entrySet()) {
                 String key = prop.getKey();
